@@ -62,6 +62,7 @@ public class TicTacToeGame {
         } else {
             board[position] = playerLetter;
             showBoard();
+            checkFreeSpace();
         }
     }
 
@@ -81,9 +82,22 @@ public class TicTacToeGame {
         }
         if (!isSpaceAvailable) {
             System.out.println("Board is full! You can't make another move");
-
         } else {
             System.out.println("Free space is available! you have " + numOfFreeSpaces + " moves left");
+        }
+    }
+
+    /**
+     * This method is for random check the first player
+     */
+
+    public void toss() {
+        int Head = 0;
+        double toss = Math.floor(Math.random() * 10) % 2;
+        if (toss == Head) {
+            System.out.println("computer starts to play first");
+        } else {
+            System.out.println("User starts to play first");
         }
     }
 
@@ -98,5 +112,6 @@ public class TicTacToeGame {
         ticTacToeGame.showBoard();
         ticTacToeGame.makeMove();
         ticTacToeGame.checkFreeSpace();
+        ticTacToeGame.toss();
     }
 }
