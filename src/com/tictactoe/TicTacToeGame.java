@@ -51,6 +51,24 @@ public class TicTacToeGame {
     }
 
     /**
+     * This method is for allow player to move on a desired location
+     */
+    public void makeMove() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Choose your location(1-9): ");
+        int position = scanner.nextInt();
+        if (board[position] != ' ')
+        {
+            System.out.println("You already chosen this! Enter a valid location");
+        }
+        else
+        {
+            board[position] = playerLetter;
+            showBoard();
+        }
+    }
+
+    /**
      * Main method to execute the program and calling the method
      */
     public static void main(String[] args) {
@@ -59,5 +77,6 @@ public class TicTacToeGame {
         ticTacToeGame.createEmptyBoard();
         ticTacToeGame.chooseLetter();
         ticTacToeGame.showBoard();
+        ticTacToeGame.makeMove();
     }
 }
