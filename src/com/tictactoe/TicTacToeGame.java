@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class TicTacToeGame {
     // Created a board of char size array 10;
-     public static char[] board = new char[10];
+    public static char[] board = new char[10];
     public static char computerLetter;
     public static char playerLetter;
 
@@ -26,13 +26,13 @@ public class TicTacToeGame {
      * This method is for taking user input for player latter and condition for the
      * computer letter and printing
      */
-    public void chooseLetter(){
+    public void chooseLetter() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Choose a letter :: X or O :");
         playerLetter = sc.next().toUpperCase().charAt(0);
-        if (playerLetter == 'X'){
+        if (playerLetter == 'X') {
             computerLetter = 'O';
-        }else {
+        } else {
             computerLetter = 'X';
         }
         System.out.println("Player choose letter : " + playerLetter);
@@ -42,12 +42,12 @@ public class TicTacToeGame {
     /**
      * This method is for display the current board
      */
-    public void showBoard(){
-        System.out.println( board[1] + " | " + board[2] + " | " + board[3] );
+    public void showBoard() {
+        System.out.println(board[1] + " | " + board[2] + " | " + board[3]);
         System.out.println("----------");
-        System.out.println( board[4] + " | " + board[5] + " | " + board[6] );
+        System.out.println(board[4] + " | " + board[5] + " | " + board[6]);
         System.out.println("----------");
-        System.out.println( board[7] + " | " + board[8] + " | " + board[9] );
+        System.out.println(board[7] + " | " + board[8] + " | " + board[9]);
     }
 
     /**
@@ -57,14 +57,33 @@ public class TicTacToeGame {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose your location(1-9): ");
         int position = scanner.nextInt();
-        if (board[position] != ' ')
-        {
+        if (board[position] != ' ') {
             System.out.println("You already chosen this! Enter a valid location");
-        }
-        else
-        {
+        } else {
             board[position] = playerLetter;
             showBoard();
+        }
+    }
+
+    /**
+     * This method is for checking the free space available on board and
+     * count the number of free space and printing
+     */
+
+    public void checkFreeSpace() {
+        boolean isSpaceAvailable = false;
+        int numOfFreeSpaces = 0;
+        for (int index = 1; index < board.length; index++) {
+            if ((board[index] == ' ')) {
+                isSpaceAvailable = true;
+                numOfFreeSpaces++;
+            }
+        }
+        if (!isSpaceAvailable) {
+            System.out.println("Board is full! You can't make another move");
+
+        } else {
+            System.out.println("Free space is available! you have " + numOfFreeSpaces + " moves left");
         }
     }
 
@@ -78,5 +97,6 @@ public class TicTacToeGame {
         ticTacToeGame.chooseLetter();
         ticTacToeGame.showBoard();
         ticTacToeGame.makeMove();
+        ticTacToeGame.checkFreeSpace();
     }
 }
