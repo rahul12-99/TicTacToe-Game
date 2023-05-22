@@ -40,6 +40,17 @@ public class TicTacToeGame {
     }
 
     /**
+     * This method is for display the current board
+     */
+    public void showBoard(){
+        System.out.println( board[1] + " | " + board[2] + " | " + board[3] );
+        System.out.println("----------");
+        System.out.println( board[4] + " | " + board[5] + " | " + board[6] );
+        System.out.println("----------");
+        System.out.println( board[7] + " | " + board[8] + " | " + board[9] );
+    }
+
+    /**
      * Main method to execute the program and calling the method
      */
     public static void main(String[] args) {
@@ -47,5 +58,6 @@ public class TicTacToeGame {
         TicTacToeGame ticTacToeGame = new TicTacToeGame();
         ticTacToeGame.createEmptyBoard();
         ticTacToeGame.chooseLetter();
+        ticTacToeGame.showBoard();
     }
 }
