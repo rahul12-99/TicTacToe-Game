@@ -5,9 +5,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToeGame {
-    /**
-     * Declared instance variable
-     */
+    /*
+    Declared instance variable
+    */
     private final char[] board;
     private char currentPlayer;
     private char userLetter;
@@ -25,6 +25,7 @@ public class TicTacToeGame {
         computerLetter = ' ';
         gameFinished = false;
     }
+
     /**
      * This method is for choose letter X or O
      */
@@ -36,6 +37,7 @@ public class TicTacToeGame {
         System.out.println("You chose " + userLetter);
         System.out.println("Computer is " + computerLetter);
     }
+
     /**
      * This method is for toss who will play first
      */
@@ -45,6 +47,7 @@ public class TicTacToeGame {
         currentPlayer = (result == 0) ? userLetter : computerLetter;
         System.out.println((currentPlayer == userLetter) ? "You play first." : "Computer plays first.");
     }
+
     /**
      * This method is for show the game board
      */
@@ -57,6 +60,7 @@ public class TicTacToeGame {
         System.out.println("| " + board[7] + " | " + board[8] + " | " + board[9] + " |");
         System.out.println("-------------");
     }
+
     /**
      * This method is for make the move
      */
@@ -70,6 +74,7 @@ public class TicTacToeGame {
 
         board[index] = currentPlayer;
     }
+
     /**
      * This method is for check available space and return true or false
      */
@@ -81,6 +86,7 @@ public class TicTacToeGame {
         }
         return true;
     }
+
     /**
      * This method is for check winning condition
      */
@@ -122,6 +128,7 @@ public class TicTacToeGame {
                 currentPlayer = computerLetter;
             } else {
                 System.out.println("Computer's turn:");
+                computerMove();
                 showBoard();
                 if (checkWin(computerLetter)) {
                     System.out.println("Computer wins! Better luck next time.");
@@ -136,10 +143,66 @@ public class TicTacToeGame {
     }
 
     /**
-     * This is main method to call the play game method
+     * This method is for computer move
      */
+    public void computerMove() {
+        // Check if computer can win in the next move
+        for (int i = 1; i < board.length; i++) {
+            if (board[i] == ' ') {
+                board[i] = computerLetter;
+                if (checkWin(computerLetter)) {
+                    return;
+                } else {
+                    board[i] = ' ';
+                }
+            }
+        }
+
+        // Check if user can win in the next move and block it
+        for (int i = 1; i < board.length; i++) {
+            if (board[i] == ' ') {
+                board[i] = userLetter;
+                if (checkWin(userLetter)) {
+                    board[i] = computerLetter;
+                    return;
+                } else {
+                    board[i] = ' ';
+                }
+            }
+        }
+
+        // Take a corner if available
+        if (board[1] == ' ') {
+            board[1] = computerLetter;
+            return;
+        } else if (board[3] == ' ') {
+            board[3] = computerLetter;
+            return;
+        } else if (board[7] == ' ') {
+            board[7] = computerLetter;
+            return;
+        } else if (board[9] == ' ') {
+            board[9] = computerLetter;
+            return;
+        }
+
+        // Take the center if available
+        if (board[5] == ' ') {
+            board[5] = computerLetter;
+            return;
+        }
+
+        // Take any available side
+        for (int i = 2; i <= 8; i += 2) {
+            if (board[i] == ' ') {
+                board[i] = computerLetter;
+                return;
+            }
+        }
+    }
+
     public static void main(String[] args) {
-            TicTacToeGame game = new TicTacToeGame();
-            game.playGame();
+        TicTacToeGame game = new TicTacToeGame();
+        game.playGame();
     }
 }
