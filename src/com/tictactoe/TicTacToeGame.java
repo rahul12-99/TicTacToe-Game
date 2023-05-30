@@ -5,14 +5,14 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToeGame {
-    /*
-     Declared instance variable
+    /**
+     * Declared instance variable
      */
     private final char[] board;
     private char currentPlayer;
     private char userLetter;
     private char computerLetter;
-    private final boolean gameFinished;
+    private boolean gameFinished;
 
     /*
      * This method is for declared the game board it's a constructor
@@ -25,7 +25,6 @@ public class TicTacToeGame {
         computerLetter = ' ';
         gameFinished = false;
     }
-
     /**
      * This method is for choose letter X or O
      */
@@ -37,7 +36,6 @@ public class TicTacToeGame {
         System.out.println("You chose " + userLetter);
         System.out.println("Computer is " + computerLetter);
     }
-
     /**
      * This method is for toss who will play first
      */
@@ -47,7 +45,6 @@ public class TicTacToeGame {
         currentPlayer = (result == 0) ? userLetter : computerLetter;
         System.out.println((currentPlayer == userLetter) ? "You play first." : "Computer plays first.");
     }
-
     /**
      * This method is for show the game board
      */
@@ -60,7 +57,6 @@ public class TicTacToeGame {
         System.out.println("| " + board[7] + " | " + board[8] + " | " + board[9] + " |");
         System.out.println("-------------");
     }
-
     /**
      * This method is for make the move
      */
@@ -74,22 +70,21 @@ public class TicTacToeGame {
 
         board[index] = currentPlayer;
     }
-
     /**
      * This method is for check available space and return true or false
      */
-    public void isSpaceAvailable() {
+    public boolean isSpaceAvailable() {
         for (int i = 1; i < board.length; i++) {
             if (board[i] == ' ') {
-                return;
+                return false;
             }
         }
+        return true;
     }
-
     /**
      * This method is for check winning condition
      */
-    public void checkWin(char player) {
+    public boolean checkWin(char player) {
         // Winning combinations
         int[][] winCombinations = {
                 {1, 2, 3}, {4, 5, 6}, {7, 8, 9}, // Rows
@@ -99,21 +94,52 @@ public class TicTacToeGame {
 
         for (int[] combination : winCombinations) {
             if (board[combination[0]] == player && board[combination[1]] == player && board[combination[2]] == player) {
-                return;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * This method is for play the game
+     */
+    public void playGame() {
+        chooseLetter();
+        toss();
+        showBoard();
+
+        while (!gameFinished) {
+            if (currentPlayer == userLetter) {
+                makeMove();
+                showBoard();
+                if (checkWin(userLetter)) {
+                    System.out.println("Congratulations! You win!");
+                    gameFinished = true;
+                } else if (isSpaceAvailable()) {
+                    System.out.println("It's a tie!");
+                    gameFinished = true;
+                }
+                currentPlayer = computerLetter;
+            } else {
+                System.out.println("Computer's turn:");
+                showBoard();
+                if (checkWin(computerLetter)) {
+                    System.out.println("Computer wins! Better luck next time.");
+                    gameFinished = true;
+                } else if (isSpaceAvailable()) {
+                    System.out.println("It's a tie!");
+                    gameFinished = true;
+                }
+                currentPlayer = userLetter;
             }
         }
     }
 
     /**
-     * This is main method for calling the play game method
+     * This is main method to call the play game method
      */
     public static void main(String[] args) {
-        TicTacToeGame game = new TicTacToeGame();
-        game.chooseLetter();
-        game.toss();
-        game.showBoard();
-        game.makeMove();
-        game.isSpaceAvailable();
-        game.checkWin(game.currentPlayer);
+            TicTacToeGame game = new TicTacToeGame();
+            game.playGame();
     }
 }
