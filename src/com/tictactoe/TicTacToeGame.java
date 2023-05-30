@@ -201,8 +201,18 @@ public class TicTacToeGame {
         }
     }
 
+    /**
+     * Main method for play the tic-tac-toe game and asking again for play
+     */
     public static void main(String[] args) {
-        TicTacToeGame game = new TicTacToeGame();
-        game.playGame();
+        Scanner scanner = new Scanner(System.in);
+        boolean playAgain = true;
+        while (playAgain) {
+            TicTacToeGame game = new TicTacToeGame();
+            game.playGame();
+            System.out.print("Do you want to play again? (Y/N): ");
+            char choice = Character.toUpperCase(scanner.next().charAt(0));
+            playAgain = (choice == 'Y');
+        }
     }
 }
